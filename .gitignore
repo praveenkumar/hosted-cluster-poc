@@ -2,7 +2,6 @@
 /manifests
 *-secret.yaml
 /openshift-apiserver/openshift-apiserver-apiservices.yaml
-/config.sh
 /config_api_ip.sh
 ignition-generator/fake-root/etc/kubernetes/kubeconfig
 ignition-generator/fake-root/etc/kubernetes/ca.crt
