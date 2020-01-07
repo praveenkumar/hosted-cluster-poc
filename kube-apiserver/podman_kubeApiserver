@@ -1,0 +1,4 @@
+podman run --rm --name kube-apiserver --network host \
+  -v /etc/k8s/pki:/etc/kubernetes:Z \
+  ${HYPERKUBE_IMAGE} \
+  hyperkube kube-apiserver --openshift-config=/etc/kubernetes/config-apiserver.yaml

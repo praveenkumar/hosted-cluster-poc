@@ -19,8 +19,8 @@ admission:
         - ${SERVICE_NETWORK_CIDR}
 aggregatorConfig:
   proxyClientInfo:
-    certFile: "/etc/kubernetes/proxy-client.crt"
-    keyFile: "/etc/kubernetes/proxy-client.key"
+    certFile: "/etc/kubernetes/kube-apiserver-aggregator-proxy-client.pem"
+    keyFile: "/etc/kubernetes/kube-apiserver-aggregator-proxy-client-key.pem"
 apiServerArguments:
   enable-aggregator-routing:
   - 'true'
@@ -76,9 +76,9 @@ auditConfig:
       omitStages:
       - RequestReceived
 authConfig:
-  oauthMetadataFile: "/etc/kubernetes/oauthMetadata"
+  oauthMetadataFile: "/etc/kubernetes/oauthMetadata.json"
   requestHeader:
-    clientCA: "/etc/kubernetes/ca.crt"
+    clientCA: "/etc/kubernetes/root-ca.pem"
     clientCommonNames:
     - kube-apiserver-proxy
     - system:kube-apiserver-proxy
@@ -97,30 +97,30 @@ corsAllowedOrigins:
 imagePolicyConfig:
   internalRegistryHostname: image-registry.openshift-image-registry.svc:5000
 kubeletClientInfo:
-  ca: "/etc/kubernetes/ca.crt"
-  certFile: "/etc/kubernetes/kubelet-client.crt"
-  keyFile: "/etc/kubernetes/kubelet-client.key"
+  ca: "/etc/kubernetes/root-ca.pem"
+  certFile: "/etc/kubernetes/kube-apiserver-kubelet.pem"
+  keyFile: "/etc/kubernetes/kube-apiserver-kubelet-key.pem"
   port: 10250
 projectConfig:
   defaultNodeSelector: ''
 serviceAccountPublicKeyFiles:
-- "/etc/kubernetes/service-account.pub"
+- "/etc/kubernetes/service-account.pem"
 servicesNodePortRange: 30000-32767
 servicesSubnet: ${SERVICE_NETWORK_CIDR}
 servingInfo:
   bindAddress: 0.0.0.0:6443
   bindNetwork: tcp4
-  clientCA: "/etc/kubernetes/ca.crt"
-  certFile: "/etc/kubernetes/server.crt"
-  keyFile: "/etc/kubernetes/server.key"
+  clientCA: "/etc/kubernetes/root-ca.pem"
+  certFile: "/etc/kubernetes/kube-apiserver-server.pem"
+  keyFile: "/etc/kubernetes/kube-apiserver-server-key.pem"
   maxRequestsInFlight: 1200
   requestTimeoutSeconds: 3600
 storageConfig:
-  ca: "/etc/kubernetes/ca.crt"
-  certFile: "/etc/kubernetes/etcd-client.crt"
-  keyFile: "/etc/kubernetes/etcd-client.key"
+  ca: "/etc/kubernetes/root-ca.pem"
+  certFile: "/etc/kubernetes/etcd-client.pem"
+  keyFile: "/etc/kubernetes/etcd-client-key.pem"
   urls:
-  - https://etcd-client:2379
+  - https://${EXTERNAL_API_IP_ADDRESS}:2379
 userAgentMatchingConfig:
   defaultRejectionMessage: ''
   deniedClients: 

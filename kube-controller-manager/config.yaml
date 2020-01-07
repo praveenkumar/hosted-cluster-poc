@@ -2,9 +2,9 @@ apiVersion: kubecontrolplane.config.openshift.io/v1
 kind: KubeControllerManagerConfig
 extendedArguments:
   authentication-kubeconfig:
-  - "/etc/kubernetes/kubeconfig"
+  - "/etc/kubernetes/kube-controller-manager.kubeconfig"
   authorization-kubeconfig:
-  - "/etc/kubernetes/kubeconfig"
+  - "/etc/kubernetes/kube-controller-manager.kubeconfig"
   allocate-node-cidrs:
   - 'true'
   cert-dir:
@@ -12,9 +12,9 @@ extendedArguments:
   cluster-cidr:
   - ${POD_NETWORK_CIDR}
   cluster-signing-cert-file:
-  - "/etc/kubernetes/cluster-signer.crt"
+  - "/etc/kubernetes/root-ca.pem"
   cluster-signing-key-file:
-  - "/etc/kubernetes/cluster-signer.key"
+  - "/etc/kubernetes/root-ca-key.pem"
   configure-cloud-routes:
   - 'false'
   controllers:
@@ -46,14 +46,14 @@ extendedArguments:
   port:
   - '0'
   root-ca-file:
-  - "/etc/kubernetes/ca.crt"
+  - "/etc/kubernetes/root-ca.pem"
   secure-port:
-  - '10257'
+  - '10252'
   service-account-private-key-file:
-  - "/etc/kubernetes/service-account"
+  - "/etc/kubernetes/service-account-key.pem"
   service-cluster-ip-range:
   - ${SERVICE_NETWORK_CIDR}
   use-service-account-credentials:
   - 'true'
 serviceServingCert:
-  certFile: "/etc/kubernetes/ca.crt"
+  certFile: "/etc/kubernetes/root-ca.pem"

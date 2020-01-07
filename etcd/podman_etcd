@@ -1,0 +1,21 @@
+podman run --rm --name etcd --privileged --network host \
+   -v /etc/k8s/pki:/etc/ssl/etcd:Z \
+   -v /etc/etcd:/etc/etcd:Z \
+   -v /var/lib/etcd:/var/lib/etcd:Z \
+   ${ETCD_IMAGE} \
+   --name=crc \
+   --initial-advertise-peer-urls=https://${EXTERNAL_API_IP_ADDRESS}:2380 \
+   --cert-file=/etc/ssl/etcd/etcd-server.pem \
+   --key-file=/etc/ssl/etcd/etcd-server-key.pem \
+   --trusted-ca-file=/etc/ssl/etcd/root-ca.pem \
+   --client-cert-auth=true \
+   --peer-cert-file=/etc/ssl/etcd/etcd-peer.pem \
+   --peer-key-file=/etc/ssl/etcd/etcd-peer-key.pem \
+   --peer-trusted-ca-file=/etc/ssl/etcd/root-ca.pem \
+   --peer-client-cert-auth=true \
+   --advertise-client-urls=https://${EXTERNAL_API_IP_ADDRESS}:2379 \
+   --listen-client-urls=https://0.0.0.0:2379 \
+   --listen-peer-urls=https://0.0.0.0:2380 \
+   --data-dir=/var/lib/etcd \
+   --initial-cluster=crc=https://${EXTERNAL_API_IP_ADDRESS}:2380 \
+   --initial-cluster-state new

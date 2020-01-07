@@ -7,7 +7,7 @@ source ../lib/common.sh
 
 export OAUTH_ROUTE="oauth-openshift.${INGRESS_SUBDOMAIN}"
 
-cat > oauthMetadata.json <<EOF
+cat > ../pki/oauthMetadata.json <<EOF
 {
   "issuer": "https://${OAUTH_ROUTE}",
   "authorization_endpoint": "https://${OAUTH_ROUTE}/oauth/authorize",
@@ -34,42 +34,7 @@ cat > oauthMetadata.json <<EOF
 }
 EOF
 
-envsubst < config.yaml > config.yaml.rendered
-cat > ../manifests/managed/kube-apiserver-secret.yaml <<EOF 
-apiVersion: v1
-kind: Secret
-metadata:
-  name: kube-apiserver
-data:
-  server.crt: $(encode ../pki/kube-apiserver-server.pem)
-  server.key: $(encode ../pki/kube-apiserver-server-key.pem)
-  kubelet-client.crt: $(encode ../pki/kube-apiserver-kubelet.pem)
-  kubelet-client.key: $(encode ../pki/kube-apiserver-kubelet-key.pem)
-  etcd-client.crt: $(encode ../pki/etcd-client.pem)
-  etcd-client.key: $(encode ../pki/etcd-client-key.pem)
-  proxy-client.crt: $(encode ../pki/kube-apiserver-aggregator-proxy-client.pem)
-  proxy-client.key: $(encode ../pki/kube-apiserver-aggregator-proxy-client-key.pem)
-  ca.crt: $(encode ../pki/combined-ca.pem)
-  service-account.pub: $(encode ../pki/service-account.pem)
-  config.yaml: $(encode config.yaml.rendered)
-  oauthMetadata: $(encode oauthMetadata.json)
-EOF
-rm -f config.yaml.rendered oauthMetadata.json
-
-envsubst < client.conf > client.conf.rendered
-cat > ../manifests/managed/openvpn-client-secret.yaml <<EOF 
-apiVersion: v1
-kind: Secret
-metadata:
-  name: openvpn-client
-data:
-  tls.crt: $(encode ../pki/openvpn-kube-apiserver-client.pem)
-  tls.key: $(encode ../pki/openvpn-kube-apiserver-client-key.pem)
-  ca.crt: $(encode ../pki/openvpn-ca.pem)
-  client.conf: $(encode client.conf.rendered)
-EOF
-rm -f client.conf.rendered
+envsubst < config.yaml > ../pki/config-apiserver.yaml
 
 export HYPERKUBE_IMAGE=$(image_for hyperkube)
-envsubst < kube-apiserver-deployment.yaml > ../manifests/managed/kube-apiserver-deployment.yaml
-envsubst < kube-apiserver-service.yaml > ../manifests/managed/kube-apiserver-service.yaml
+envsubst < podman_kubeApiserver > podman_kubeApiserver.rendered

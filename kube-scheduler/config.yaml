@@ -1,7 +1,7 @@
 apiVersion: kubescheduler.config.k8s.io/v1alpha1
 kind: KubeSchedulerConfiguration
 clientConnection:
-  kubeconfig: "/etc/kubernetes/kubeconfig"
+  kubeconfig: "/etc/kubernetes/kube-scheduler.kubeconfig"
 leaderElection:
   leaderElect: true
   # TODO: OOTB kube-scheduler cluster role does not allow updating
