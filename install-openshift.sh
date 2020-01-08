@@ -31,8 +31,8 @@ sudo rm -fr /etc/k8s/pki
 sudo mkdir -p /etc/k8s/
 sudo cp -r pki /etc/k8s/
 
-sudo mkdir -f /var/lib/etcd
-sudo rm -fr /var/lib/etcd
+sudo mkdir -p /var/lib/etcd
+sudo rm -fr /var/lib/etcd/*
 
 pushd manifests/managed
 for component in etcd kube-apiserver kube-controller-manager kube-scheduler; do
