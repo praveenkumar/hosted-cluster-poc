@@ -1,0 +1,5 @@
+#!/bin/bash
+sudo podman run -d --rm --privileged --name kube-apiserver --network host \
+  -v /etc/k8s/pki:/etc/kubernetes:Z \
+  ${OPENSHIFT_APISERVER_IMAGE} \
+  start --config=/etc/kubernetes/config-openshiftApiserver.yaml

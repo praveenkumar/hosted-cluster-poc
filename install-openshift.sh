@@ -21,7 +21,7 @@ mkdir -p manifests/managed manifests/user
 KUBEADMIN_PASSWORD=$(openssl rand -hex 24 | tr -d '\n')
 echo $KUBEADMIN_PASSWORD > kubeadmin-password
 
-for component in etcd kube-apiserver kube-controller-manager kube-scheduler; do
+for component in etcd kube-apiserver kube-controller-manager kube-scheduler openshift-apiserver; do
   pushd ${component} >/dev/null
   ./render.sh
   popd >/dev/null
@@ -32,7 +32,7 @@ sudo mkdir -p /etc/k8s/
 sudo cp -r pki /etc/k8s/
 
 pushd manifests/managed >/dev/null
-for component in etcd kube-apiserver kube-controller-manager kube-scheduler; do
+for component in etcd kube-apiserver kube-controller-manager kube-scheduler openshift-apiserver; do
   ./run-${component}.sh
   sleep 10
 done
