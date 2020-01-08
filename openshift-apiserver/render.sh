@@ -7,6 +7,8 @@ source ../lib/common.sh
 
 CABUNDLE="$(encode ../pki/root-ca.pem)"
 
+envsubst < config.yaml > ../pki/config-openshiftApiserver.yaml
+
 # managed
 export OPENSHIFT_APISERVER_IMAGE=$(image_for openshift-apiserver)
 envsubst < podman_openshiftApiserver > ../manifests/managed/run-openshift-apiserver.sh

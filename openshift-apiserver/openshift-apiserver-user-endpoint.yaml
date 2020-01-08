@@ -5,8 +5,8 @@ metadata:
   namespace: default
 subsets:
 - addresses:
-  - ip: 127.0.0.1
+  - ip: ${EXTERNAL_API_IP_ADDRESS}
   ports:
   - name: https
-    port: 443
+    port: 4443
     protocol: TCP
