@@ -8,5 +8,5 @@ subsets:
   - ip: ${EXTERNAL_API_IP_ADDRESS}
   ports:
   - name: https
-    port: 4443
+    port: 8443
     protocol: TCP

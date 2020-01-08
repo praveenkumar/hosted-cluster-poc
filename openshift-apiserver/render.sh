@@ -12,6 +12,7 @@ envsubst < config.yaml > ../pki/config-openshiftApiserver.yaml
 # managed
 export OPENSHIFT_APISERVER_IMAGE=$(image_for openshift-apiserver)
 envsubst < podman_openshiftApiserver > ../manifests/managed/run-openshift-apiserver.sh
+envsubst < openshift-apiserver-service.yaml > ../manifests/managed/openshift-apiserver-service.yaml
 chmod +x ../manifests/managed/run-openshift-apiserver.sh
 
 # user
