@@ -3,13 +3,6 @@
 source config-defaults.sh
 source lib/common.sh
 
-export API_NODEPORT="${API_NODEPORT:-$EXTERNAL_API_PORT}"
-
-if ! oc get pods --request-timeout=5s &>/dev/null; then
-  echo "Unable to connect to the management cluster."
-  echo "Ensure KUBECONFIG env var is set to user with cluster-admin on the management cluster."
-fi
-
 set -eu
 
 # make-pki.sh does not remove the /pki directory and does not regenerate certs that already exist.

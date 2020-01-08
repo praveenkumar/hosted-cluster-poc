@@ -8,3 +8,4 @@ envsubst < config.yaml > ../pki/config-scheduler.yaml
 
 export HYPERKUBE_IMAGE=$(image_for hyperkube)
 envsubst < podman_kubeScheduler > ../manifests/managed/run-kube-scheduler.sh
+chmod +x ../manifests/managed/run-kube-scheduler.sh
