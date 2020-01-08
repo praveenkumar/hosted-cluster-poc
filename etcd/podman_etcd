@@ -1,4 +1,6 @@
-podman run --rm --name etcd --privileged --network host \
+#!/bin/bash
+
+sudo podman run -d --rm --name etcd --privileged --network host \
    -v /etc/k8s/pki:/etc/ssl/etcd:Z \
    -v /etc/etcd:/etc/etcd:Z \
    -v /var/lib/etcd:/var/lib/etcd:Z \

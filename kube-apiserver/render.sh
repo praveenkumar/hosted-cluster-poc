@@ -37,4 +37,4 @@ EOF
 envsubst < config.yaml > ../pki/config-apiserver.yaml
 
 export HYPERKUBE_IMAGE=$(image_for hyperkube)
-envsubst < podman_kubeApiserver > podman_kubeApiserver.rendered
+envsubst < podman_kubeApiserver > ../manifests/managed/run-kube-apiserver.sh

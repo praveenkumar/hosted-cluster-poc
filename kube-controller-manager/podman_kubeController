@@ -1,4 +1,5 @@
-podman run --rm --name kube-controller-manager --network host \
+#!/bin/bash
+sudo podman run -d --rm --name kube-controller-manager --network host \
   -v /etc/k8s/pki:/etc/kubernetes:Z \
   ${HYPERKUBE_IMAGE} \
   hyperkube kube-controller-manager --openshift-config=/etc/kubernetes/config-controller.yaml --kubeconfig=/etc/kubernetes/kube-controller-manager.kubeconfig

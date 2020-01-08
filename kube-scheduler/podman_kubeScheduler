@@ -1,4 +1,5 @@
-podman run --rm --name kube-scheduler --network host \
+#!/bin/bash
+sudo podman run -d --rm --name kube-scheduler --network host \
  -v /etc/k8s/pki:/etc/kubernetes:Z \
  ${HYPERKUBE_IMAGE} \
  hyperkube kube-scheduler --config=/etc/kubernetes/config-scheduler.yaml --cert-dir=/var/run/kubernetes --port=0 \

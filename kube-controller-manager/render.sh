@@ -8,4 +8,4 @@ source ../lib/common.sh
 envsubst < config.yaml > ../pki/config-controller.yaml
 
 export HYPERKUBE_IMAGE=$(image_for hyperkube)
-envsubst < podman_kubeController > podman_kubeController.rendered
+envsubst < podman_kubeController > ../manifests/managed/run-kube-controller-manager.sh
