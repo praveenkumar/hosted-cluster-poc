@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 # none, aws, or openstack
 export PLATFORM=none
 
@@ -9,7 +10,7 @@ export BASE_DOMAIN=nip.io
 
 # the name external name on which to connect to the user cluster API server
 # IMPACT: kube-apiserver cert generation and admin.kubeconfig server URL
-export EXTERNAL_API_DNS_NAME=$(ifconfig | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v '127.0.0.1').${BASE_DOMAIN}
+export EXTERNAL_API_DNS_NAME=192.168.130.1.${BASE_DOMAIN}
 
 # the external IP on which to connect to the user cluster API server
 export EXTERNAL_API_IP_ADDRESS=$(dig +short ${EXTERNAL_API_DNS_NAME})

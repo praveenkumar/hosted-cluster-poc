@@ -1,4 +1,7 @@
 #!/bin/bash
+
+sudo podman pull --authfile pull-secret ${OPENSHIFT_APISERVER_IMAGE}
+
 sudo podman run -d --rm --privileged --name openshift-apiserver --network host \
   -v /etc/k8s/pki:/etc/kubernetes:Z \
   ${OPENSHIFT_APISERVER_IMAGE} \

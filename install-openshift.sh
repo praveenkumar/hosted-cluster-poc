@@ -18,10 +18,12 @@ fetch_release_pullspecs
 echo "Rendering manifests"
 rm -rf manifests
 mkdir -p manifests/managed manifests/user
+cp pull-secret manifests/managed
+
 KUBEADMIN_PASSWORD=$(openssl rand -hex 24 | tr -d '\n')
 echo $KUBEADMIN_PASSWORD > kubeadmin-password
 
-for component in etcd kube-apiserver kube-controller-manager kube-scheduler openshift-apiserver; do
+for component in etcd kube-apiserver kube-controller-manager kube-scheduler openshift-apiserver cluster-bootstrap openshift-controller-manager; do
   pushd ${component}
   ./render.sh
   popd
@@ -34,6 +36,10 @@ sudo cp -r pki /etc/k8s/
 sudo mkdir -p /var/lib/etcd
 sudo rm -fr /var/lib/etcd/*
 
+sudo mkdir -p /etc/etcd
+sudo rm -fr /etc/etcd/*
+
+# Start basic K8s
 pushd manifests/managed
 for component in etcd kube-apiserver kube-controller-manager kube-scheduler; do
   ./run-${component}.sh
@@ -41,8 +47,26 @@ for component in etcd kube-apiserver kube-controller-manager kube-scheduler; do
 done
 popd
 
-echo "Install complete!"
-echo "To access the cluster as the system:admin user when using 'oc', run 'export $(pwd)/pki/admin.kubeconfig"
-echo "To join additional nodes to the cluster, use the node-bootstrapper kubeconfig at $(pwd)/pki/kubelet-bootstrap.kubeconfig"
-echo "Access the OpenShift web-console here: https://console-openshift-console.${INGRESS_SUBDOMAIN}"
-echo "Login into the console with user: kubeadmin, password ${KUBEADMIN_PASSWORD}"
+# Apply service and endpoint before starting the openshift-apiserver
+kubectl --kubeconfig=pki/admin.kubeconfig apply -f manifests/user/openshift-apiserver-user-service.yaml
+kubectl --kubeconfig=pki/admin.kubeconfig apply -f manifests/user/openshift-apiserver-user-endpoint.yaml
+
+# Start openshift-apiserver
+pushd manifests/managed
+for component in openshift-apiserver; do
+  ./run-${component}.sh
+  sleep 10
+done
+popd
+
+# Apply CRD's
+kubectl --kubeconfig=pki/admin.kubeconfig apply -f manifests/user/
+
+# Start openshift-controller-manager
+pushd manifests/managed
+for component in openshift-controller-manager; do
+  ./run-${component}.sh
+  sleep 10
+done
+popd
+

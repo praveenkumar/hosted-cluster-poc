@@ -1,4 +1,7 @@
 #!/bin/bash
+
+sudo podman pull --authfile pull-secret ${HYPERKUBE_IMAGE}
+
 sudo podman run -d --rm --name kube-scheduler --network host \
  -v /etc/k8s/pki:/etc/kubernetes:Z \
  ${HYPERKUBE_IMAGE} \

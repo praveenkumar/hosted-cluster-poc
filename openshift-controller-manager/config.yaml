@@ -13,8 +13,10 @@ dockerPullSecret:
 ingress:
   ingressIPNetworkCIDR: ''
 kubeClientConfig:
-  kubeConfig: /etc/kubernetes/kubeconfig
+  kubeConfig: /etc/kubernetes/service-admin.kubeconfig
 servingInfo:
-  certFile: /etc/kubernetes/server.crt
-  keyFile: /etc/kubernetes/server.key
-  clientCA: /etc/kubernetes/ca.crt
+  bindAddress: 0.0.0.0:8444
+  bindNetwork: tcp4
+  certFile: /etc/kubernetes/openshift-controller-manager-server.pem
+  keyFile: /etc/kubernetes/openshift-controller-manager-server-key.pem
+  clientCA: /etc/kubernetes/root-ca.pem

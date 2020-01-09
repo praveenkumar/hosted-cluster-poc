@@ -48,7 +48,7 @@ extendedArguments:
   root-ca-file:
   - "/etc/kubernetes/root-ca.pem"
   secure-port:
-  - '10252'
+  - '10257'
   service-account-private-key-file:
   - "/etc/kubernetes/service-account-key.pem"
   service-cluster-ip-range:

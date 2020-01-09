@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo podman pull --authfile pull-secret ${ETCD_IMAGE}
+
 sudo podman run -d --rm --name etcd --privileged --network host \
    -v /etc/k8s/pki:/etc/ssl/etcd:Z \
    -v /etc/etcd:/etc/etcd:Z \
