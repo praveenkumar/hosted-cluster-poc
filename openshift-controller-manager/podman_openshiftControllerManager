@@ -2,7 +2,7 @@
 
 sudo podman pull --authfile pull-secret ${OPENSHIFT_CONTROLLER_MANAGER_IMAGE}
 
-sudo podman run -d --rm --privileged --name openshift-controller-manager --network host \
-  -v /etc/k8s/pki:/etc/kubernetes:Z \
+sudo podman run -d --rm --name openshift-controller-manager --network host \
+  -v /etc/k8s/base/openshift-controller-manager:/etc/kubernetes:Z \
   ${OPENSHIFT_CONTROLLER_MANAGER_IMAGE} \
   openshift-controller-manager start --config=/etc/kubernetes/config-openshiftController.yaml

@@ -29,9 +29,11 @@ for component in etcd kube-apiserver kube-controller-manager kube-scheduler open
   popd
 done
 
-sudo rm -fr /etc/k8s/pki
-sudo mkdir -p /etc/k8s/
-sudo cp -r pki /etc/k8s/
+sudo rm -fr /etc/k8s
+for component in kube-apiserver openshift-apiserver openshift-controller-manager; do
+    sudo mkdir -p /etc/k8s/base/${component}
+    sudo cp -r pki/*  /etc/k8s/base/${component}/
+done
 
 sudo mkdir -p /var/lib/etcd
 sudo rm -fr /var/lib/etcd/*

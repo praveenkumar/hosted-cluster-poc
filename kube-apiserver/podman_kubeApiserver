@@ -3,6 +3,6 @@
 sudo podman pull --authfile pull-secret ${HYPERKUBE_IMAGE}
 
 sudo podman run -d --rm --privileged --name kube-apiserver --network host \
-  -v /etc/k8s/pki:/etc/kubernetes:Z \
+  -v /etc/k8s/base/kube-apiserver:/etc/kubernetes:Z \
   ${HYPERKUBE_IMAGE} \
   hyperkube kube-apiserver --openshift-config=/etc/kubernetes/config-apiserver.yaml
