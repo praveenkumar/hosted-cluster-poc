@@ -167,6 +167,6 @@ generate_client_key_cert "root-ca" "openshift-apiserver-server" "openshift-apise
 generate_client_key_cert "root-ca" "openshift-controller-manager-server" "openshift-controller-manager" "openshift" "openshift-controller-manager,localhost"
 
 # kubelet
-generate_client_key_cert "root-ca" "kublet" "system:node:localhost" "system:nodes"
+generate_client_key_cert "root-ca" "kubelet" "system:node:localhost" "system:nodes"
 
 rm -f *.csr
