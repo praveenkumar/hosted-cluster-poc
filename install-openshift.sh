@@ -72,3 +72,10 @@ for component in openshift-controller-manager; do
 done
 popd
 
+# Start kubelet service
+sudo mkdir -p /etc/kubernetes
+sudo cp kubelet/kubelet.conf /etc/kubernetes
+sudo cp pki/kubelet-key.pem pki/kubelet.pem pki/kubelet.kubeconfig /etc/kubernetes
+sudo cp kubelet/kubelet.service /etc/systemd/system/kubelet.service
+sudo systemctl daemon-reload
+sudo systemctl start kubelet

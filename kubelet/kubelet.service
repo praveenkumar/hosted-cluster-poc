@@ -1,0 +1,29 @@
+[Unit]
+Description=Kubernetes Kubelet
+Wants=network-online.target crio.service
+After=network-online.target crio.service
+
+[Service]
+Type=notify
+ExecStartPre=/bin/mkdir --parents /etc/kubernetes/manifests
+ExecStartPre=/bin/rm -f /var/lib/kubelet/cpu_manager_state
+EnvironmentFile=/etc/os-release
+
+ExecStart=/usr/bin/hyperkube \
+    kubelet \
+      --config=/etc/kubernetes/kubelet.conf \
+      --rotate-certificates \
+      --kubeconfig=/var/lib/kubelet/kubeconfig \
+      --container-runtime=remote \
+      --container-runtime-endpoint=/var/run/crio/crio.sock \
+      --node-labels=node-role.kubernetes.io/master,node.openshift.io/os_id=${ID} \
+      --minimum-container-ttl-duration=6m0s \
+      --volume-plugin-dir=/etc/kubernetes/kubelet-plugins/volume/exec \
+      --hostname-override=localhost \
+      --v=3
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

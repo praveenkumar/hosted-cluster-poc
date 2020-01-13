@@ -1,1 +1,0 @@
-{"ignition":{"config":{"append":[{"source":"http://ignition-server.example.com:8000/final.ign","verification":{}}]},"security":{},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{},"storage":{},"systemd":{}}

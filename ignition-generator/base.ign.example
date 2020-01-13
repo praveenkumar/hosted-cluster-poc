@@ -1,1 +1,0 @@
-{"ignition":{"config":{},"security":{"tls":{}},"timeouts":{},"version":"2.2.0"},"networkd":{},"passwd":{"users":[{"name":"core","sshAuthorizedKeys":["insert-your-ssh-pub-key-here"]}]},"storage":{},"systemd":{}}

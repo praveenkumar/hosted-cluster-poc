@@ -12,4 +12,4 @@ for i in *-config.yml; do
   envsubst < $i > ../manifests/user/$i
 done
 
-oc create configmap kubelet-serving-ca --dry-run -oyaml -n openshift-config-managed --from-file=ca-bundle.crt=../pki/root-ca.pem > ../manifests/user/kubelet-serving-ca-configmap.yaml
+oc --config=../pki/admin.kubeconfig create configmap kubelet-serving-ca --dry-run -oyaml -n openshift-config-managed --from-file=ca-bundle.crt=../pki/root-ca.pem > ../manifests/user/kubelet-serving-ca-configmap.yaml

@@ -131,8 +131,11 @@ generate_ca "root-ca"
 # admin kubeconfig
 generate_client_kubeconfig "root-ca" "admin" "system:admin" "system:masters" "" "${EXTERNAL_API_DNS_NAME}:${EXTERNAL_API_PORT}"
 
-# kubelet bootstrapper kubeconfig
-generate_client_kubeconfig "root-ca" "kubelet-bootstrap" "system:bootstrapper" "system:bootstrappers" "" "${EXTERNAL_API_DNS_NAME}:${EXTERNAL_API_PORT}"
+# kubelet kubeconfig
+generate_client_kubeconfig "root-ca" "kubelet" "system:node:localhost" "system:nodes"
+
+# kube-proxy kubeconfig
+generate_client_kubeconfig "root-ca" "kube-proxy" "system:kube-proxy" "system:node-proxier"
 
 # service client admin kubeconfig
 generate_client_kubeconfig "root-ca" "service-admin" "system:admin" "system:masters" "kube-apiserver"
@@ -162,5 +165,8 @@ generate_client_key_cert "root-ca" "openshift-apiserver-server" "openshift-apise
 
 # openshift-controller-manager
 generate_client_key_cert "root-ca" "openshift-controller-manager-server" "openshift-controller-manager" "openshift" "openshift-controller-manager,localhost"
+
+# kubelet
+generate_client_key_cert "root-ca" "kublet" "system:node:localhost" "system:nodes"
 
 rm -f *.csr
